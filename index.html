@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TNProfiler</title>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="jquery.csv.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+	<script src="data.js"></script>
+	<style type="text/css">
+	canvas {
+		max-height: 400px;
+		width: 100%;
+	}
+	#etaMediaMaschiResult, #etaMediaFemmineResult {
+		max-width: 50%;
+		display: inline-block;
+		float: left;
+	}
+	</style>
+</head>
+<body>
+	<form>
+		<select>
+			<option value="startingPoint" selected="true" disabled="disabled">Scegliere un comune di interesse</option>
+		</select>
+	</form>
+	<div class="loading">LOADING</div>
+	<div class="etaMedia">
+		<h1>Età media</h1>
+		<canvas id="etaMediaResult"></canvas>
+		<canvas id="etaMediaMaschiResult"></canvas>
+		<canvas id="etaMediaFemmineResult"></canvas>
+	</div>
+
+	
+</body>
+</html>

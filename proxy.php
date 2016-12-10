@@ -1,0 +1,17 @@
+<?php
+  header('Content-Type: application/json');
+  switch ($_REQUEST["richiesta"]) {
+  	case 'eta':
+  		echo file_get_contents("http://www.statweb.provincia.tn.it/indicatoristrutturalisubpro/exp.aspx?idind=448&info=d&fmt=json");
+  		break;
+  	case 'eta_maschi':
+  		echo file_get_contents("http://www.statweb.provincia.tn.it/indicatoristrutturalisubpro/exp.aspx?idind=425&info=d&fmt=json");
+  		break;
+  	case 'eta_femmine':
+  		echo file_get_contents("http://www.statweb.provincia.tn.it/indicatoristrutturalisubpro/exp.aspx?idind=426&info=d&fmt=json");
+  		break;
+  	default:
+  		break;
+  }
+  
+?>
