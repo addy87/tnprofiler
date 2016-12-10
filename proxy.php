@@ -10,6 +10,9 @@
   	case 'eta_femmine':
   		echo file_get_contents("http://www.statweb.provincia.tn.it/indicatoristrutturalisubpro/exp.aspx?idind=426&info=d&fmt=json");
   		break;
+    case 'maschi_vs_femmine':
+      echo file_get_contents("http://www.statweb.provincia.tn.it/indicatoristrutturalisubpro/exp.aspx?idind=342&info=d&fmt=json");
+      break;
   	default:
   		break;
   }
