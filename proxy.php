@@ -19,6 +19,9 @@
     case 'stranieri':
       echo file_get_contents("http://www.statweb.provincia.tn.it/indicatoristrutturalisubpro/exp.aspx?idind=253&info=d&fmt=json");
       break;
+    case 'natalita':
+      echo file_get_contents("http://www.statweb.provincia.tn.it/indicatoristrutturalisubpro/exp.aspx?idind=2&info=d&fmt=json");
+      break;
   	default:
   		break;
   }

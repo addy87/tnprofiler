@@ -31,6 +31,7 @@ function main() {
 
 	//diplomatiChart = creaChartLine("diplomatiResult", "Indice diplomati");
 	stranieriChart = creaChartLine("stranieriResult", "Residenti stranieri");
+	natalitaChart = creaChartLine("natalitaResult", "Tasso di natalità");
 
 	$("#selettore input[type='submit']").attr('disabled','disabled');
 	$("#selettore select").on("change", function(e) {
@@ -89,6 +90,7 @@ function draw(idEnte, anno) {
 	//get_single_value(idEnte, site+"proxy.php?richiesta=diplomati",annoMin,diplomatiChart,"indice diplomati", "line");
 
 	get_single_value(idEnte, site+"proxy.php?richiesta=stranieri",annoMin,stranieriChart,"residenti stranieri", "line");
+	get_single_value(idEnte, site+"proxy.php?richiesta=natalita",annoMin,natalitaChart,"tasso di natalità", "line");
 
 	isLoading = true;
 	empty.fadeOut();
