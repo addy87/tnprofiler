@@ -79,6 +79,14 @@ input[type="range"]:focus, input[type="range"]:active {
 	height: 400px;
 	border-radius: 4px;
 }
+
+@media all and (max-width: 991px) {
+	.contenitore, canvas {
+		height: 300px;
+	}
+}
+
+
 .contenitore.empty {
 	height: auto;
 }
