@@ -190,6 +190,7 @@ function draw_line_chart(chartID, labelsArray, label, valori) {
 	chartID.data.labels = labelsArray;
 	chartID.data.datasets[0].label = label;
 	chartID.data.datasets[0].data = valori;
+	chartID.data.datasets[0].borderColor = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
 
 	chartID.labels = labelsArray;
 	chartID.update();
