@@ -75,7 +75,7 @@ function option_csv(data) {
 
 function draw(idEnte, anno) {
 	var annoMin = anno;
-	var site = "http://localhost/tnprofiler/";
+	var site = "http://tnprofiler.herokuapp.com/";
 	get_single_value(idEnte, site+"proxy.php?richiesta=eta",annoMin,etaMediaChart,"età media");
 	get_single_value(idEnte, site+"proxy.php?richiesta=eta_maschi",annoMin,etaMediaMaschiChart,"età media maschi");
 	get_single_value(idEnte, site+"proxy.php?richiesta=eta_femmine",annoMin,etaMediaFemmineChart,"età media femmine");
