@@ -1,57 +1,46 @@
 $(document).ready(main);
 
-var loading;
 var myChart;
 var myBarChart;
 
+var firstRun;
+var enteSelezionato;
+var annoSelezionato;
 
-function main() {	
-	get_csv();
-	loading = $(".loading");
-	canvas = $("canvas");
-	loading.hide();
-	etaMediaChart = creaChartBar("etaMediaResult", "Età media", "bar");
-	etaMediaMaschiChart = creaChartBar("etaMediaMaschiResult", "Età media maschi", "bar");
-	etaMediaFemmineChart = creaChartBar("etaMediaFemmineResult", "Età media femmine", "bar");
-	//maschiVsFemmineChart = creaChartBar("maschiVsFemmineResult", "Rapporto maschi/femmine", "doughnut");
-	canvas.hide();
-}
+var isLoading = false;
 
-function creaChartBar(canvasID, titoloChart, tipo) {
-	var canvasResult = $("#"+canvasID);
-    var chart = new Chart(canvasResult,{
-	    type: tipo,
-	    data: {
-	        labels: [],
-	        datasets: [{
-	            label: [],
-	            data: [],
-	            borderWidth: 1,
-	        }],			        
-	    },
-	    options: {
-	    	title: {
-	            display: true,
-	            text: titoloChart,
-	        },
-	        legend: {
-	        	display: false,
-	        },
-	        scales: {
-	            yAxes: [{
-	                ticks: {
-	                    beginAtZero:false,
-	                }
-	            }]
-	        },
-	        responsiveAnimationDuration: 3000,
-	        animateScale: true,
-			maintainAspectRatio: false,
-			responsive: true,
-	    },
+
+function main() {
+	firstRun = true;
+	$('input[type="range"]').rangeslider().on('input', function(e) {
+		$(".input-group-addon.anno").text(e.target.value);
 	});
-	return chart;
+	$(".input-group-addon.anno").text($('input[type="range"]').val());
+	get_csv();
+	canvas = $(".contenitore").not( ".empty");
+	title = $(".title .inner");
+	empty = $(".empty");
+	canvas.hide();
+	title.hide();
+	empty.hide();
+
+	etaMediaChart = creaChartBar("etaMediaResult", "Età media");
+	etaMediaMaschiChart = creaChartBar("etaMediaMaschiResult", "Età media maschi");
+	etaMediaFemmineChart = creaChartBar("etaMediaFemmineResult", "Età media femmine");
+	maschiVsFemmineChart = creaChartBarStacked("maschiVsFemmineResult", "Rapporto maschi/femmine");
+
+	$("#selettore input[type='submit']").attr('disabled','disabled');
+	$("#selettore select").on("change", function(e) {
+		if($("#selettore select").val() != "startingPoint" && !isLoading)
+			$("#selettore input[type='submit']").removeAttr('disabled','disabled');
+	});
+
+	Chart.defaults.global.defaultFontFamily = 'Quicksand';
+	Chart.defaults.global.defaultFontSize =  14;
+	Chart.defaults.global.defaultFontColor = '#333';
 }
+
+
 
 
 
@@ -67,36 +56,61 @@ function option_csv(data) {
 	for (var i in codEnti) {
 		if(codEnti[i]["descriz"].toLowerCase().indexOf("disponibile") != -1)
 			continue;
-		$("form select").append("<option value='"+codEnti[i]["comu"]+"'>"+codEnti[i]["descriz"]+"</option>");
+
+		var comune = codEnti[i]["descriz"];
+		comune = comune.replace(/\uFFFD/, "");
+		$("#selettore select").append("<option value='"+codEnti[i]["comu"]+"'>"+comune+"</option>");
 	}
 
-	$("form select").on("change", function() {
-		if(! (this.value =="startingPoint") ) {
-			draw(this.value);
+	$("#selettore").on("submit", function(e) {
+		if( $("#selettore select").val() &&  $("#selettore #anno").val() ) {
+			draw($("#selettore select").val(), $("#selettore #anno").val());
+			$("#selettore input[type='submit']").attr('disabled','disabled');
+			enteSelezionato = $("#selettore option:selected").text();
+			annoSelezionato = $("#selettore #anno").val();
 		}
+		e.preventDefault();
 	})
 }
 
-function draw(id) {
+function draw(idEnte, anno) {
+	var annoMin = anno;
+	var site = "http://localhost/tnprofiler/";
+	get_single_value(idEnte, site+"proxy.php?richiesta=eta",annoMin,etaMediaChart,"età media");
+	get_single_value(idEnte, site+"proxy.php?richiesta=eta_maschi",annoMin,etaMediaMaschiChart,"età media maschi");
+	get_single_value(idEnte, site+"proxy.php?richiesta=eta_femmine",annoMin,etaMediaFemmineChart,"età media femmine");
 
-	get_eta_media(id);
-	get_eta_media_maschi(id);
-	get_eta_media_femmine(id);
-	get_maschi_vs_femmine(id);
-	loading.show();
+	get_double_value(idEnte, site+"proxy.php?richiesta=maschi_vs_femmine",annoMin,maschiVsFemmineChart,"percentuale maschi","percentuale femmine", true);
+	
+	isLoading = true;
+	empty.fadeOut();
+	
+	$(".title .inner").fadeOut(300, function() {
+		$(".title .inner").html('<div class="spinner"></div>');	
+		$(".title .inner").fadeIn(300);
+	});
+	
 }
 
-function get_eta_media(id) {
-	$.get("http://localhost/tnprofiler/proxy.php?richiesta=eta")
+
+
+
+function get_single_value(idEnte, url, annoMinimo, chartID, nomeLabel) {
+	$.get(url)
 	.success(function(data) {
+			
+
+
 			var result = [];
 			var anni = [];
 			var valori = [];
-			var data = data["Età media della popolazione"];
+			var data = data[Object.keys(data)[0]];
 			
+
+
 			for (var i in data) {
-				if (data[i].codEnte == id) {
-					if(!(parseInt(data[i].anno) < "2000")) {
+				if (data[i].codEnte == idEnte) {
+					if(!(parseInt(data[i].anno) < annoMinimo)) {
 						result.push(data[i]);
 						anni.push(data[i].anno);
 						valori.push(data[i].valore);
@@ -104,152 +118,91 @@ function get_eta_media(id) {
 					
 				}
 			}
-			loading.hide();
 
-			draw_chart(etaMediaChart, anni, "età media", valori);
-			
-
-	});
-}
-function get_eta_media_maschi(id) {
-	$.get("http://localhost/tnprofiler/proxy.php?richiesta=eta_maschi")
-	.success(function(data) {
-			var result = [];
-			var anni = [];
-			var valori = [];
-			var data = data["Età media dei maschi"];
-			
-			for (var i in data) {
-				if (data[i].codEnte == id) {
-					if(!(parseInt(data[i].anno) < "2000")) {
-						result.push(data[i]);
-						anni.push(data[i].anno);
-						valori.push(data[i].valore);
-					}
-				}
-			}
-			loading.hide();
-
-			draw_chart(etaMediaMaschiChart, anni, "età media maschi", valori);
-			
-
-	});
-}
-function get_eta_media_femmine(id) {
-	$.get("http://localhost/tnprofiler/proxy.php?richiesta=eta_femmine")
-	.success(function(data) {
-			var result = [];
-			var anni = [];
-			var valori = [];
-			var data = data["Età media delle femmine"];
-			
-			for (var i in data) {
-				if (data[i].codEnte == id) {
-					if(!(parseInt(data[i].anno) < "2000")) {
-						result.push(data[i]);
-						anni.push(data[i].anno);
-						valori.push(data[i].valore);
-					}
-				}
-			}
-			loading.hide();
-
-			draw_chart(etaMediaFemmineChart, anni, "età media femmine", valori);
-			
-
-	});
-}
-
-function get_maschi_vs_femmine(id) {
-	$.get("http://localhost/tnprofiler/proxy.php?richiesta=maschi_vs_femmine")
-	.success(function(data) {
-			var result = [];
-			var anni = [];
-			var valori = [];
-			var valori_delta = [];
-			var colori = [];
-			var colori_delta = [];
-			var data = data["Incidenza della popolazione femminile sul totale della popolazione"];
-			
-			for (var i in data) {
-				if (data[i].codEnte == id) {
-					if(!(parseInt(data[i].anno) < "2000")) {
-						result.push(data[i]);
-						anni.push(data[i].anno);
-						valori.push(data[i].valore);
-						colori.push('rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')');
-					}
-				}
-			}
-			loading.hide();
-
-			//draw_chart(maschiVsFemmineChart, anni, "Incidenza della popolazione femminile sul totale della popolazione", valori);
-			for (var i in valori) {
-				valori_delta.push(100-valori[i]);
-				colori_delta.push('rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')');
-			}
-
-			var ano = $("#maschiVsFemmineResult");
-			var maschiVsFemmineChart = new Chart(ano,{
-			    type: "bar",
-			    data: {
-			        labels: anni,
-			        datasets: [{
-			            label: "femmine",
-			            data: valori,
-			            backgroundColor: colori,
-			            borderWidth: 1,
-			        },
-			        {
-			            label: "maschi",
-			            data: valori_delta,
-			            backgroundColor: colori_delta,
-			            borderWidth: 1,
-			        }],			        
-			    },
-			    options: {
-        scales: {
-            yAxes: [{
-				stacked: true,
-                ticks: {
-                    beginAtZero:true
-                }
-            }],
-            xAxes: [{
-				stacked: true,
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-			
-        },
-        responsiveAnimationDuration: 3000,
-	        animateScale: true,
-			maintainAspectRatio: false,
-			responsive: true,
-    },
-			});
-			
-			console.log(colori);
-console.log(colori_delta);
-	});
-
-
-}
-
-function draw_chart(chartID, labelsArray, label, valori) {
-	var colori = [];
-	for(var i in valori)
-		colori.push('rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')');
-
-	chartID.data.datasets[0].label = label;
-	chartID.data.datasets[0].data = valori;
-	chartID.data.datasets[0].backgroundColor = colori;
-	chartID.data.labels = labelsArray;
-	chartID.update();
-	canvas.fadeIn(400, function() {
-			chartID.resize();
-			chartID.resize();
+			if(result.length !== 0){
+				empty.fadeOut();
+				draw_single_chart(chartID, anni, nomeLabel, valori);		
+			}			
+	})
+	.fail(function() {
+		//gestione errore super super basic
+		canvas.fadeIn();
+		var canvasParent = chartID.chart.canvas.id;
+		$("#"+canvasParent).parent().append('<p class="bg-danger">GASP! Qualcosa è andato storto. Sorry about it!<br><b>Please, ricaricare la pagina.</b></p>');
 	});
 	
 }
+
+function get_double_value(idEnte, url, annoMinimo, chartID, nomeLabel, nomeLabel2, percento) {
+	$.get(url)
+	.success(function(data) {
+			var result = [];
+			var anni = [];
+			var valori = [];
+			var valori2 = [];
+			var data = data[Object.keys(data)[0]];
+			
+			for (var i in data) {
+				if (data[i].codEnte == idEnte) {
+					if(!(parseInt(data[i].anno) < annoMinimo)) {
+						result.push(data[i]);
+						anni.push(data[i].anno);
+						valori.push(data[i].valore);
+					}
+				}
+			}
+			
+
+			
+			if(result.length == 0){
+				emptyResponse(chartID);
+			} else {
+				if(percento) {
+					for (var i in valori) {
+						valori2.push(100-valori[i]);
+					}
+					draw_double_chart(chartID, anni, nomeLabel, valori, nomeLabel2, valori2);
+				}
+				empty.fadeOut();
+			}
+
+			
+	})
+	.fail(function() {
+		//gestione errore super super basic
+		canvas.fadeIn();
+		var canvasParent = chartID.chart.canvas.id;
+		$("#"+canvasParent).parent().append('<p class="bg-danger">GASP! Qualcosa è andato storto. Sorry about it!<br><b>Please, ricaricare la pagina.</b></p>');
+	});
+
+}
+
+
+function emptyResponse(chartID) {
+	chartID.clear();
+	canvas.fadeOut();
+	empty.html("<h3 style='text-align:center; padding:20px 10px;'>Nessun risultato fornito per "+enteSelezionato+"<br>Prego, provare un altro comune</h3>");
+	empty.fadeIn();
+	console.log("empty");
+}
+
+$(document).ajaxStop(function() {
+	
+
+	if(firstRun) {
+		$(".title .inner").html("<h1>Benvenuto</h1>");	
+		$(".title .inner").fadeIn(600);
+		firstRun = false;
+	} else {
+		$("#selettore input[type='submit']").removeAttr('disabled');
+		$(".title .inner").fadeOut(300, function() {
+			$(".title .inner").html("<h1>Dati su " + enteSelezionato + " dal " + annoSelezionato + " al 2015</h1>");	
+			$(".title .inner").fadeIn(300);
+		});
+
+		isLoading = false;
+	}
+	
+
+});
+

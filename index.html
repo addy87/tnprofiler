@@ -1,39 +1,215 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>TNProfiler</title>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script src="jquery.csv.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
-	<script src="data.js"></script>
-	<style type="text/css">
-	canvas {
-		max-height: 400px;
-		max-width: 100%;
-	}
-	#etaMediaMaschiResult, #etaMediaFemmineResult {
-		max-width: 50%;
-		display: inline-block;
-		float: left;
-	}
-	</style>
-</head>
-<body>
-	<form>
-		<select>
-			<option value="startingPoint" selected="true" disabled="disabled">Scegliere un comune di interesse</option>
-		</select>
-	</form>
-	<div class="loading">LOADING</div>
-	<div class="etaMedia">
-		<h1>Età media</h1>
-		<canvas id="etaMediaResult"></canvas>
-		<canvas id="etaMediaMaschiResult"></canvas>
-		<canvas id="etaMediaFemmineResult"></canvas>
-		<canvas id="maschiVsFemmineResult"></canvas>
-	</div>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>TNProfiler</title>
 
-	
-</body>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#604a52">
+
+		<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>		
+		<script src="jquery.csv.min.js"></script>	
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+		<script src="rainbowvis.js"></script>
+		<script src="charts.js"></script>
+		<script src="data.js"></script>
+		<script src="rangeslider.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet">
+		<style type="text/css">
+			html, body, .container-fluid {
+				background-color: #eeeeee;
+				font-family: 'Quicksand', sans-serif;
+			}
+			.navbar {
+				border: none;
+			}
+			.navbar .container-fluid {
+				background: #2c262a; /* Old browsers */
+				background: -moz-linear-gradient(left,  #2c262a 0%, #604a52 100%); /* FF3.6-15 */
+				background: -webkit-linear-gradient(left,  #2c262a 0%,#604a52 100%); /* Chrome10-25,Safari5.1-6 */
+				background: linear-gradient(to right,  #2c262a 0%,#604a52 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c262a', endColorstr='#604a52',GradientType=1 ); /* IE6-9 */
+			}
+
+			.navbar-header {
+				width: 100%;
+				display: table;
+				padding: 20px 0;
+			}
+			.navbar h1, .navbar .home {
+				margin: 0;
+				display: table-cell;
+				vertical-align: middle;
+				color: #ffffff;
+				text-decoration: none !important;
+			}
+			.navbar .home, .navbar .home a {
+				color: #ffffff;
+				text-decoration: none !important;
+				text-align: right;
+			}
+			.title {
+				width: 100%;
+				text-align: center;
+				padding: 20px 0;
+			}
+			.title h1 {
+				margin: 0;
+				font-weight: 600;
+    			font-size: 24px;
+    			padding: 12px 0;
+			}
+			input[type="range"] {
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
+			input[type="range"]:focus, input[type="range"]:active {
+				outline: 0;
+				-webkit-box-shadow: none;
+				box-shadow: none;
+			}
+			.input-group-addon.anno {
+				min-width: 60px;
+				border: none;
+				padding: 0;
+				text-align: left;
+			}
+			#selettore {
+				margin-bottom: 30px;
+			}
+			@media all and (min-width: 992px) {
+				#selettore .form-group {
+					margin-bottom: 30px;
+				}
+			}
+
+			.contenitore {
+				padding: 10px 15px;
+			}
+			.contenitore, canvas {
+				height: 400px;
+				border-radius: 4px;
+			}
+			.contenitore.empty {
+				height: auto;
+			}
+			.title, .contenitore, .info {
+				background-color: #ffffff;
+				margin-bottom: 30px;
+				box-shadow: 1px 1px 10px #dadada;
+				border: 1px solid #d6d6d6;
+				border-radius: 4px;
+			}
+
+			.spinner {
+				height: 50px;
+				width: 50px;
+				border: 8px solid #A2DED0;
+				border-radius: 50%;
+				position: relative;
+				-webkit-animation: spinneranim 2s infinite linear;
+				animation: spinneranim 2s infinite linear;
+				margin: auto;
+			}  
+
+			.spinner:before {
+				content: '';
+				height: 6px;
+				width: 6px;
+				border-radius: 50%;
+				background-color: #16A085;
+				position: absolute;
+				top: -7px;
+				left: 14px;
+			}
+
+			@-webkit-keyframes spinneranim {
+				100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+			}   
+			@keyframes spinneranim {
+				100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+			}
+		</style>
+	</head>
+	<body class="">
+
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="col-md-12">
+					<div class="navbar-header">
+						<h1>TNProfiler</h1>
+						<div class="home"><a href="http://addy87.altervista.org"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></div>
+					</div>
+				</div>
+			</div> 
+		</nav>
+
+		<div class="container-fluid">
+			<div class="col-md-3">				
+				<form id="selettore">
+					<div class="form-group">
+						<label for="selettoreEnte">Scegli un comune</label>
+						<select class="form-control" name="ente" id="selettoreEnte">
+							<option value="startingPoint" selected="true" disabled="disabled">---</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="anno">Scegli un anno</label>
+						<div class="input-group">
+							<div class="input-group-addon anno"></div>
+							<input type="range" min="1986" max="2015" step="1" required="true" id="anno" value="2000" class="form-control" />						
+						</div>
+					</div>
+					<input type="submit" class="btn btn-primary btn-block" value="Ricerca" />
+				</form>
+
+				<div class="info alert alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+					<p><b>INFO</b></p><br>
+					<p>TNProfiler è uno strumento demo con potenzialità di profilazione demografica che utilizza i "dataset" pubblicamente forniti dal servizio <b><a href="http://dati.trentino.it/dataset" target="_blank" title="opendata trentino">OPENdata Trentino</a></b>.</p><br>
+					<p>L'elenco dei comuni, così come le informazioni relative, sono scaricate dinamicamente dal servizio OPENdata. Alcuni comuni, nonostante siano presenti in elenco, non hanno dati disponibili per le tematiche scelte.</p>
+				</div>
+
+			</div>
+
+			<div class="col-md-9">
+
+				<div class="title"><div class="inner"></div></div>
+				<div class="row">
+			  		<div class="col-md-12">
+			  			<div class="contenitore"><canvas id="etaMediaResult"></canvas></div>
+			  		</div>
+			  	</div>
+			  	<div class="row">
+			  		<div class="col-md-6">
+			  			<div class="contenitore"><canvas id="etaMediaMaschiResult"></canvas></div>
+			  		</div>
+			  		<div class="col-md-6">
+			  			<div class="contenitore"><canvas id="etaMediaFemmineResult"></canvas></div>
+			  		</div>
+			  	</div>
+			  	<div class="row">
+			  		<div class="col-md-12">
+			  			<div class="contenitore"><canvas id="maschiVsFemmineResult"></canvas></div>
+			  		</div>
+			  	</div>
+
+			  	<div class="row">
+			  		<div class="col-md-12">
+			  			<div class="contenitore empty"></div>
+			  		</div>
+			  	</div>		  	
+			</div>
+		</div>
+			
+			
+			
+
+
+		
+	</body>
 </html>
