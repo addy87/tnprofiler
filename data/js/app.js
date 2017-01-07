@@ -60,7 +60,7 @@ function option_csv(data) {
 		separator: ";"
 	});
 	for (var i in codEnti) {
-		if (codEnti[i]["descriz"].toLowerCase().indexOf("disponibile") != -1) continue;
+		if (codEnti[i]["descriz"].toLowerCase().indexOf("disponibile") != -1 || codEnti[i]["descriz"].toLowerCase().indexOf("fuori") != -1) continue;
 		var comune = codEnti[i]["descriz"];
 		comune = comune.replace(/\uFFFD/, "");
 		$("#selettore select").append("<option value='" + codEnti[i]["comu"] + "'>" + comune + "</option>");
