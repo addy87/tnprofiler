@@ -46,7 +46,7 @@ function main() {
 	Chart.defaults.global.defaultFontSize = 14;
 	Chart.defaults.global.defaultFontColor = '#333';
 	
-	
+	console.log("Starting....");
 }
 
 function get_csv() {
