@@ -90,6 +90,7 @@ function option_csv(data) {
 		console.log(codEnti);
 		var codice = codEnti[i]["codice"];
 		var comune = codEnti[i]["comune"];
+		codice = codice.replace(" ", "");
 		$("#selettore select").append("<option value='" + codice + "'>" + comune + "</option>");
 	}
 	$("#selettore").on("submit", function(e) {
