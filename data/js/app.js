@@ -150,7 +150,7 @@ function get_single_value(idEnte, url, annoMinimo, chartID, nomeLabel, type) {
 		//gestione errore super super basic
 		canvas.fadeIn();
 		var canvasParent = chartID.chart.canvas.id;
-		$("#" + canvasParent).parent().append('<p class="bg-danger">GASP! Qualcosa è andato storto. Sorry about it!<br><b>Please, ricaricare la pagina.</b></p>');
+		$("#" + canvasParent).parent().append('<p class="bg-danger">Errore esterno sito http://www.statweb.provincia.tn.it</p>');
 	});
 }
 
@@ -185,7 +185,7 @@ function get_double_value(idEnte, url, annoMinimo, chartID, nomeLabel, nomeLabel
 		//gestione errore super super basic
 		canvas.fadeIn();
 		var canvasParent = chartID.chart.canvas.id;
-		$("#" + canvasParent).parent().append('<p class="bg-danger">GASP! Qualcosa è andato storto. Sorry about it!<br><b>Please, ricaricare la pagina.</b></p>');
+		$("#" + canvasParent).parent().append('<p class="bg-danger">Errore esterno sito http://www.statweb.provincia.tn.it</p>');
 	});
 }
 
