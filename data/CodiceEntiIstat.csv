@@ -92,127 +92,127 @@ codice;comune
 97;Imer
 98;Isera
 99;Ivano-Fracena
- 100 ;Lardaro
- 101 ;Lasino
- 102 ;Lavarone
- 103 ;Lavis
- 104 ;Levico Terme
- 105 ;Lisignago
- 106 ;Livo
- 108 ;Lona-Lases
- 109 ;Luserna
- 110 ;Malè
- 111 ;Malosco
- 112 ;Massimeno
- 113 ;Mazzin
- 114 ;Mezzana
- 115 ;Mezzano
- 116 ;Mezzocorona
- 117 ;Mezzolombardo
- 118 ;Moena
- 120 ;Molveno
- 121 ;Monclassico
- 122 ;Montagne
- 123 ;Mori
- 124 ;Nago-Torbole
- 125 ;Nanno
- 126 ;Nave San Rocco
- 127 ;Nogaredo
- 128 ;Nomi
- 129 ;Novaledo
- 130 ;Ospedaletto
- 131 ;Ossana
- 132 ;Padergnone
- 133 ;Palù del Fersina
- 134 ;Panchià
- 135 ;Ronzo-Chienis
- 136 ;Peio
- 137 ;Pellizzano
- 138 ;Pelugo
- 139 ;Pergine Valsugana
- 140 ;Pieve di Bono
- 142 ;Pieve Tesino
- 143 ;Pinzolo
- 144 ;Pomarolo
- 145 ;Pozza di Fassa
- 146 ;Praso
- 147 ;Predazzo
- 148 ;Preore
- 149 ;Prezzo
- 150 ;Rabbi
- 151 ;Ragoli
- 152 ;Revò
- 153 ;Riva del Garda
- 154 ;Romallo
- 155 ;Romeno
- 156 ;Roncegno Terme
- 157 ;Ronchi Valsugana
- 158 ;Roncone
- 159 ;Ronzone
- 160 ;Roverè della Luna
- 161 ;Rovereto
- 162 ;Ruffrè-Mendola
- 163 ;Rumo
- 164 ;Sagron Mis
- 165 ;Samone
- 166 ;San Lorenzo in Banale
- 167 ;San Michele all'Adige
- 168 ;Sant'Orsola Terme
- 169 ;Sanzeno
- 170 ;Sarnonico
- 171 ;Scurelle
- 172 ;Segonzano
- 173 ;Sfruz
- 174 ;Siror
- 175 ;Smarano
- 176 ;Soraga
- 177 ;Sover
- 178 ;Spera
- 179 ;Spiazzo
- 180 ;Spormaggiore
- 181 ;Sporminore
- 182 ;Stenico
- 183 ;Storo
- 184 ;Strembo
- 185 ;Strigno
- 186 ;Taio
- 187 ;Tassullo
- 188 ;Telve
- 189 ;Telve di Sopra
- 190 ;Tenna
- 191 ;Tenno
- 192 ;Terlago
- 193 ;Terragnolo
- 194 ;Terres
- 195 ;Terzolas
- 196 ;Tesero
- 199 ;Tione di Trento
- 200 ;Ton
- 201 ;Tonadico
- 202 ;Torcegno
- 203 ;Trambileno
- 204 ;Transacqua
- 205 ;Trento
- 206 ;Tres
- 207 ;Tuenno
- 208 ;Valda
- 209 ;Valfloriana
- 210 ;Vallarsa
- 211 ;Varena
- 212 ;Vattaro
- 213 ;Vermiglio
- 214 ;Vervò
- 215 ;Vezzano
- 216 ;Vignola-Falesina
- 217 ;Vigo di Fassa
- 219 ;Vigolo Vattaro
- 220 ;Vigo Rendena
- 221 ;Villa Agnedo
- 222 ;Villa Lagarina
- 223 ;Villa Rendena
- 224 ;Volano
- 225 ;Zambana
- 226 ;Ziano di Fiemme
- 227 ;Zuclo
- 228 ;Comano Terme
- 229 ;Ledro
+100;Lardaro
+101;Lasino
+102;Lavarone
+103;Lavis
+104;Levico Terme
+105;Lisignago
+106;Livo
+108;Lona-Lases
+109;Luserna
+110;Malè
+111;Malosco
+112;Massimeno
+113;Mazzin
+114;Mezzana
+115;Mezzano
+116;Mezzocorona
+117;Mezzolombardo
+118;Moena
+120;Molveno
+121;Monclassico
+122;Montagne
+123;Mori
+124;Nago-Torbole
+125;Nanno
+126;Nave San Rocco
+127;Nogaredo
+128;Nomi
+129;Novaledo
+130;Ospedaletto
+131;Ossana
+132;Padergnone
+133;Palù del Fersina
+134;Panchià
+135;Ronzo-Chienis
+136;Peio
+137;Pellizzano
+138;Pelugo
+139;Pergine Valsugana
+140;Pieve di Bono
+142;Pieve Tesino
+143;Pinzolo
+144;Pomarolo
+145;Pozza di Fassa
+146;Praso
+147;Predazzo
+148;Preore
+149;Prezzo
+150;Rabbi
+151;Ragoli
+152;Revò
+153;Riva del Garda
+154;Romallo
+155;Romeno
+156;Roncegno Terme
+157;Ronchi Valsugana
+158;Roncone
+159;Ronzone
+160;Roverè della Luna
+161;Rovereto
+162;Ruffrè-Mendola
+163;Rumo
+164;Sagron Mis
+165;Samone
+166;San Lorenzo in Banale
+167;San Michele all'Adige
+168;Sant'Orsola Terme
+169;Sanzeno
+170;Sarnonico
+171;Scurelle
+172;Segonzano
+173;Sfruz
+174;Siror
+175;Smarano
+176;Soraga
+177;Sover
+178;Spera
+179;Spiazzo
+180;Spormaggiore
+181;Sporminore
+182;Stenico
+183;Storo
+184;Strembo
+185;Strigno
+186;Taio
+187;Tassullo
+188;Telve
+189;Telve di Sopra
+190;Tenna
+191;Tenno
+192;Terlago
+193;Terragnolo
+194;Terres
+195;Terzolas
+196;Tesero
+199;Tione di Trento
+200;Ton
+201;Tonadico
+202;Torcegno
+203;Trambileno
+204;Transacqua
+205;Trento
+206;Tres
+207;Tuenno
+208;Valda
+209;Valfloriana
+210;Vallarsa
+211;Varena
+212;Vattaro
+213;Vermiglio
+214;Vervò
+215;Vezzano
+216;Vignola-Falesina
+217;Vigo di Fassa
+219;Vigolo Vattaro
+220;Vigo Rendena
+221;Villa Agnedo
+222;Villa Lagarina
+223;Villa Rendena
+224;Volano
+225;Zambana
+226;Ziano di Fiemme
+227;Zuclo
+228;Comano Terme
+229;Ledro
