@@ -50,6 +50,7 @@ function main() {
 }
 
 function get_csv() {
+	/* OLD VERSION WITH DATASET TRENTINO
 	$.get("http://dati.trentino.it/dataset/b9796d51-8c26-4fed-8249-3a3da438dd27/resource/200a2c47-2a44-4d2b-a42c-86d6adee9d4f/download/codente.csv")
 		.success(function(data) {
 			option_csv(data);
@@ -57,17 +58,29 @@ function get_csv() {
 		.fail(function() {
 			$(".title").after('<div class="alert alert-danger" role="alert"><strong>Errore esterno</strong> Purtroppo la risorsa <a href="http://dati.trentino.it/dataset/b9796d51-8c26-4fed-8249-3a3da438dd27/resource/200a2c47-2a44-4d2b-a42c-86d6adee9d4f/download/codente.csv" target="_blank" title="codente.csv" class="alert-link">CodEnte.csv</a> (elencante i codici comuni) è stata eliminata da OPENdata Trentino.</div>');
 		});
+
+	*/
 }
 
 function option_csv(data) {
+	/* OLD VERSION WITH DATASET TRENTINO
 	var codEnti = $.csv.toObjects(data, {
 		separator: ";"
 	});
+	
 	for (var i in codEnti) {
 		if (codEnti[i]["descriz"].toLowerCase().indexOf("disponibile") != -1 || codEnti[i]["descriz"].toLowerCase().indexOf("fuori") != -1) continue;
 		var comune = codEnti[i]["descriz"];
 		comune = comune.replace(/\uFFFD/, "");
 		$("#selettore select").append("<option value='" + codEnti[i]["comu"] + "'>" + comune + "</option>");
+	}
+
+	*/
+	var codEnti = $.csv.toObjects("/data/CodiceEntiIstat.csv", {
+		separator: ";"
+	});
+	for (var i in codEnti) {
+		console.log(codEnti);
 	}
 	$("#selettore").on("submit", function(e) {
 		if ($("#selettore select").val() && $("#selettore #anno").val()) {
