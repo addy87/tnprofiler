@@ -55,7 +55,7 @@ function get_csv() {
 			option_csv(data);
 		})
 		.fail(function() {
-			alert("Errore. Purtroppo la risorsa CodEnte.csv (elencante i codici comuni) è stata eliminata da OPENdata Trentino.")
+			$(".title").after('<div class="alert alert-danger" role="alert"><strong>Errore esterno</strong> Purtroppo la risorsa <a href="http://dati.trentino.it/dataset/b9796d51-8c26-4fed-8249-3a3da438dd27/resource/200a2c47-2a44-4d2b-a42c-86d6adee9d4f/download/codente.csv" target="_blank" title="codente.csv" class="alert-link">CodEnte.csv</a> (elencante i codici comuni) è stata eliminata da OPENdata Trentino.</div>');
 		});
 }
 
