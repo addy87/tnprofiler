@@ -60,6 +60,13 @@ function get_csv() {
 		});
 
 	*/
+	$.get("/data/CodiceEntiIstat.csv")
+		.success(function(data) {
+			option_csv(data);
+		})
+		.fail(function() {
+			$(".title").after('<div class="alert alert-danger" role="alert"><strong>Errore esterno</strong> Purtroppo la risorsa <a href="http://dati.trentino.it/dataset/b9796d51-8c26-4fed-8249-3a3da438dd27/resource/200a2c47-2a44-4d2b-a42c-86d6adee9d4f/download/codente.csv" target="_blank" title="codente.csv" class="alert-link">CodEnte.csv</a> (elencante i codici comuni) è stata eliminata da OPENdata Trentino.</div>');
+		});
 }
 
 function option_csv(data) {
@@ -76,7 +83,7 @@ function option_csv(data) {
 	}
 
 	*/
-	var codEnti = $.csv.toObjects("/data/CodiceEntiIstat.csv", {
+	var codEnti = $.csv.toObjects(data, {
 		separator: ";"
 	});
 	for (var i in codEnti) {
