@@ -50,9 +50,13 @@ function main() {
 }
 
 function get_csv() {
-	$.get("http://dati.trentino.it/dataset/b9796d51-8c26-4fed-8249-3a3da438dd27/resource/200a2c47-2a44-4d2b-a42c-86d6adee9d4f/download/codente.csv").success(function(data) {
-		option_csv(data);
-	});
+	$.get("http://dati.trentino.it/dataset/b9796d51-8c26-4fed-8249-3a3da438dd27/resource/200a2c47-2a44-4d2b-a42c-86d6adee9d4f/download/codente.csv")
+		.success(function(data) {
+			option_csv(data);
+		})
+		.fail(function() {
+			console.log("failed");
+		});
 }
 
 function option_csv(data) {
