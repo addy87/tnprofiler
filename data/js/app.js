@@ -87,7 +87,6 @@ function option_csv(data) {
 		separator: ";"
 	});
 	for (var i in codEnti) {
-		console.log(codEnti);
 		var codice = codEnti[i]["codice"];
 		var comune = codEnti[i]["comune"];
 		codice = codice.replace(" ", "");
