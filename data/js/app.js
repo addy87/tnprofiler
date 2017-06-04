@@ -88,6 +88,9 @@ function option_csv(data) {
 	});
 	for (var i in codEnti) {
 		console.log(codEnti);
+		var codice = codEnti[i]["codice"];
+		var comune = codEnti[i]["comune"];
+		$("#selettore select").append("<option value='" + codice + "'>" + comune + "</option>");
 	}
 	$("#selettore").on("submit", function(e) {
 		if ($("#selettore select").val() && $("#selettore #anno").val()) {
